@@ -329,7 +329,9 @@ class OAuthRemoteApp(object):
         """
         if self.request_token_url:
             token = self.generate_request_token(callback)[0]
-            url = '%s?oauth_token=%s' % (self.expand_url(self.authorize_url),
+            url = self.expand_url(self.authorize_url)
+            url = '%s%soauth_token=%s' % (url,
+                                         '?' in url and '&' or '?',
                                          url_quote(token))
         else:
             assert callback is not None, 'Callback is required OAuth2'
